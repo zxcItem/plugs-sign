@@ -15,7 +15,8 @@
         "ext-curl": "*",
         "ext-json": "*",
         "zoujingli/think-install": "^1.0|@dev",
-        "zoujingli/think-library": "^6.1|@dev"
+        "zoujingli/think-library": "^6.1|@dev",
+        "xiaochao/plugs-account": "dev-master"
     },
     "autoload": {
         "psr-4": {
