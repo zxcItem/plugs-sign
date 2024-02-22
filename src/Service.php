@@ -37,7 +37,6 @@ class Service extends Plugin
         // 设置插件菜单
         return [
             [
-                'pid'  => 100,
                 'name' => '签到管理',
                 'subs' => [
                     ['name' => '用户签到记录', 'icon' => 'layui-icon layui-icon-table', 'node' => "{$code}/sign/index"],

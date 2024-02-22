@@ -1,6 +1,6 @@
 <?php
 
-namespace app\sign\controller;
+namespace plugin\sign\controller;
 
 use Ip2Region;
 use plugin\sign\model\AccountSign;

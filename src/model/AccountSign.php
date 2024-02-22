@@ -5,8 +5,8 @@ declare (strict_types=1);
 
 namespace plugin\sign\model;
 
-use plugin\Account\model\Abs;
-use plugin\Account\model\AccountUser;
+use plugin\account\model\Abs;
+use plugin\account\model\AccountUser;
 use think\model\relation\BelongsTo;
 
 /**
