@@ -2,6 +2,7 @@
 
 declare (strict_types=1);
 
+namespace plugin\sign;
 
 use think\admin\Plugin;
 
