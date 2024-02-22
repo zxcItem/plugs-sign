@@ -1,8 +1,8 @@
 <?php
 
+use plugin\sign\Service;
 use think\admin\extend\PhinxExtend;
 use think\migration\Migrator;
-use think\migration\db\Column;
 
 class InstallSign extends Migrator
 {
