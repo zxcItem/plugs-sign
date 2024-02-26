@@ -5,7 +5,7 @@ declare (strict_types=1);
 namespace plugin\sign\service;
 
 use plugin\sign\model\AccountSign;
-use plugin\sign\service\Integral;
+use plugin\payment\service\IntegralService;
 use think\admin\Exception;
 use think\admin\extend\CodeExtend;
 
@@ -21,7 +21,7 @@ class SignService
      * 用户配置缓存名
      * @var string
      */
-    private static $skey = 'account.sign';
+    private static $skey = 'sign.config';
 
     /**
      * 读取签到配置参数
@@ -61,6 +61,7 @@ class SignService
         if (!$todaySign->isEmpty()) throw new Exception("今日已签到无法重复签到！");
         $data = self::getSignTodayReward($uid,$base);
         self::record($uid,$data['days'],$data['reward']);
+        return $data;
     }
 
     /**
@@ -105,7 +106,7 @@ class SignService
         ];
         if (AccountSign::mk()->save($data)){
             $code = CodeExtend::uniqidDate(16, 'QD');
-            Integral::create($uid,$code,'积分签到',$reward,"连续签到【{$days}】天，奖励【{$reward}】积分",true);
+            IntegralService::create($uid,$code,'积分签到',$reward,"连续签到【{$days}】天，奖励【{$reward}】积分",true);
         }
     }
 
