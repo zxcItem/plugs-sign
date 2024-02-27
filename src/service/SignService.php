@@ -21,7 +21,7 @@ class SignService
      * 用户配置缓存名
      * @var string
      */
-    private static $skey = 'sign.config';
+    private static $skey = 'plugin.sign.config';
 
     /**
      * 读取签到配置参数
