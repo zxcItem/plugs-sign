@@ -40,6 +40,7 @@ class Service extends Plugin
                 'name' => '签到管理',
                 'subs' => [
                     ['name' => '用户签到记录', 'icon' => 'layui-icon layui-icon-table', 'node' => "{$code}/sign/index"],
+                    ['name' => '用户签到记录', 'icon' => 'layui-icon layui-icon-table', 'node' => "{$code}/checkin/index"],
                 ],
             ]
         ];
