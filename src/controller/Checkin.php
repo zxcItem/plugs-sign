@@ -41,6 +41,7 @@ class Checkin extends Controller
     /**
      * 签到配置管理
      * @auth true
+     * @menu true
      * @return void
      * @throws \think\admin\Exception
      */

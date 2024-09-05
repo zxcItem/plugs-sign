@@ -5,8 +5,8 @@ declare (strict_types=1);
 
 namespace plugin\sign\controller\api\auth;
 
-use plugin\payment\service\BalanceService;
-use plugin\payment\service\IntegralService;
+use plugin\payment\service\Balance;
+use plugin\payment\service\Integral;
 use plugin\account\controller\api\Auth;
 use plugin\sign\model\PluginSignUserCheckin;
 use think\admin\extend\CodeExtend;
@@ -71,8 +71,8 @@ class Checkin extends Auth
             [$balance, $integral] = [floatval($checkin->getAttr('balance')), floatval($checkin->getAttr('integral'))];
             if ($balance > 0 || $integral > 0) $this->app->db->transaction(function () use ($checkin, $balance, $integral) {
                 $code = CodeExtend::uniqidNumber(16, 'CK');
-                $balance > 0 && BalanceService::create($this->unid, $code, '签到奖励余额', $balance, '通过签到活动获得的奖励', true);
-                $integral > 0 && IntegralService::create($this->unid, $code, '签到奖励积分', $integral, '通过签到活动获得的奖励', true);
+                $balance > 0 && Balance::create($this->unid, $code, '签到奖励余额', $balance, '通过签到活动获得的奖励', true);
+                $integral > 0 && Integral::create($this->unid, $code, '签到奖励积分', $integral, '通过签到活动获得的奖励', true);
             });
             $this->success('签到成功！', $checkin->refresh()->toArray());
         } catch (HttpResponseException $exception) {
