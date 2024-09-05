@@ -9,10 +9,10 @@ use plugin\account\model\Abs;
 
 /**
  * 用户签到
- * @class AccountSign
+ * @class PluginSignUserCheckin
  * @package plugin\sign\model
  */
-class AccountUserCheckin extends Abs
+class PluginSignUserCheckin extends Abs
 {
 
     /**

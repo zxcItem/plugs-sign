@@ -8,7 +8,7 @@ namespace plugin\sign\controller\api\auth;
 use plugin\payment\service\BalanceService;
 use plugin\payment\service\IntegralService;
 use plugin\account\controller\api\Auth;
-use plugin\sign\model\AccountUserCheckin;
+use plugin\sign\model\PluginSignUserCheckin;
 use think\admin\extend\CodeExtend;
 use think\admin\helper\QueryHelper;
 use think\exception\HttpResponseException;
@@ -44,9 +44,9 @@ class Checkin extends Auth
     public function add()
     {
         try {
-            $conf = sysdata(AccountUserCheckin::$ckcfg);
+            $conf = sysdata(PluginSignUserCheckin::$ckcfg);
             if (empty($conf['status'])) $this->error('活动未开始！');
-            $last = AccountUserCheckin::mk()->where(['unid' => $this->unid])->order('id desc')->findOrEmpty();
+            $last = PluginSignUserCheckin::mk()->where(['unid' => $this->unid])->order('id desc')->findOrEmpty();
             if ($last->isExists() && $last->getAttr('date') === $this->today) $this->success('已签到！', $last->toArray());
             // 计算连续天数
             $yesterday = date('Y-m-d', strtotime('-1day', strtotime($this->today)));
@@ -59,7 +59,7 @@ class Checkin extends Auth
             }
             // 写入签到数据
             $item = $conf['items'][$timed - 1] ?? [];
-            ($checkin = AccountUserCheckin::mk())->save([
+            ($checkin = PluginSignUserCheckin::mk())->save([
                 'unid'     => $this->unid,
                 'date'     => $this->today,
                 'times'    => $times,
@@ -91,7 +91,7 @@ class Checkin extends Auth
         $data = $this->_vali(['date.default' => '']);
         if (empty($data['date'])) $data['date'] = date('Y-m');
         $date = date('Y-m', strtotime($data['date']));
-        AccountUserCheckin::mQuery(null, function (QueryHelper $query) use ($date) {
+        PluginSignUserCheckin::mQuery(null, function (QueryHelper $query) use ($date) {
             $query->where(['unid' => $this->unid])->whereLike('create_time', "{$date}%");
             $this->success('获取签到记录！', $query->order('id desc')->page(false, false, false, 90));
         });
@@ -106,7 +106,7 @@ class Checkin extends Auth
      */
     protected function _page_filter(array &$data, array &$result)
     {
-        $conf = sysdata(AccountUserCheckin::$ckcfg);
+        $conf = sysdata(PluginSignUserCheckin::$ckcfg);
         $result['date'] = $this->today;
         $result['tips'] = str2arr($conf['tips'], "\n");
     }
@@ -118,7 +118,7 @@ class Checkin extends Auth
      */
     public function config()
     {
-        $data = sysdata(AccountUserCheckin::$ckcfg);
+        $data = sysdata(PluginSignUserCheckin::$ckcfg);
         unset($data['days'], $data['items']);
         $this->success('获取签到配置', $data);
     }

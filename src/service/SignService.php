@@ -4,8 +4,8 @@ declare (strict_types=1);
 
 namespace plugin\sign\service;
 
-use plugin\sign\model\AccountSign;
-use plugin\payment\service\IntegralService;
+use plugin\sign\model\PluginSignUserCheckin;
+use plugin\payment\service\Integral;
 use think\admin\Exception;
 use think\admin\extend\CodeExtend;
 
@@ -57,7 +57,7 @@ class SignService
     {
         $base = self::get();
         if (empty($base['is_sign'])) throw new Exception("签到功能暂未开启！");
-        $todaySign = AccountSign::mk()->where('unid',$uid)->whereDay('create_time')->findOrEmpty();
+        $todaySign = PluginSignUserCheckin::mk()->where('unid',$uid)->whereDay('create_time')->findOrEmpty();
         if (!$todaySign->isEmpty()) throw new Exception("今日已签到无法重复签到！");
         $data = self::getSignTodayReward($uid,$base);
         self::record($uid,$data['days'],$data['reward']);
@@ -104,9 +104,9 @@ class SignService
             'reward'   => $reward,
             'days'     => $days
         ];
-        if (AccountSign::mk()->save($data)){
+        if (PluginSignUserCheckin::mk()->save($data)){
             $code = CodeExtend::uniqidDate(16, 'QD');
-            IntegralService::create($uid,$code,'积分签到',$reward,"连续签到【{$days}】天，奖励【{$reward}】积分",true);
+            Integral::create($uid,$code,'积分签到',$reward,"连续签到【{$days}】天，奖励【{$reward}】积分",true);
         }
     }
 
@@ -119,7 +119,7 @@ class SignService
     public static function getSignTodayReward(int $uid,array $base): array
     {
         $base['extra'] = json_decode($base['extra'],true);
-        $sign = AccountSign::mk()->where('unid',$uid)->whereDay('create_time', date('Y-m-d', strtotime('-1 day')))->findOrEmpty();
+        $sign = PluginSignUserCheckin::mk()->where('unid',$uid)->whereDay('create_time', date('Y-m-d', strtotime('-1 day')))->findOrEmpty();
         [$days, $reached] = self::getSignDay($uid,$base,$sign);
         [$data['days'],$data['reward']] = self::getSignReward($base,$days,$reached);
         return $data;
@@ -134,7 +134,7 @@ class SignService
     public static function getSignTomorrowReward(int $uid,array $base): array
     {
         $base['extra'] = json_decode($base['extra'],true);
-        $sign = AccountSign::mk()->where('unid',$uid)->whereDay('create_time')->findOrEmpty();
+        $sign = PluginSignUserCheckin::mk()->where('unid',$uid)->whereDay('create_time')->findOrEmpty();
         [$days, $reached] = self::getSignDay($uid,$base,$sign);
         [$data['days'],$data['reward']] = self::getSignReward($base,$days,$reached);
         return $data;

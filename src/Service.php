@@ -4,6 +4,7 @@ declare (strict_types=1);
 
 namespace plugin\sign;
 
+use plugin\account\Service as AccountService;
 use think\admin\Plugin;
 
 /**
@@ -35,14 +36,14 @@ class Service extends Plugin
         // 设置插件菜单
         $code = app(static::class)->appCode;
         // 设置插件菜单
-        return [
+        return array_merge(AccountService::menu(), [
             [
                 'name' => '签到管理',
                 'subs' => [
-                    ['name' => '用户签到记录', 'icon' => 'layui-icon layui-icon-table', 'node' => "{$code}/sign/index"],
+//                    ['name' => '用户签到记录', 'icon' => 'layui-icon layui-icon-table', 'node' => "{$code}/sign/index"],
                     ['name' => '用户签到记录', 'icon' => 'layui-icon layui-icon-table', 'node' => "{$code}/checkin/index"],
                 ],
             ]
-        ];
+        ]);
     }
 }

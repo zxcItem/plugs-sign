@@ -1,21 +1,15 @@
 {
     "type": "think-admin-plugin",
     "name": "xiaochao/plugs-sign",
-    "license": "MIT",
-    "description": "PlugsSign for ThinkAdmin",
+    "version": "dev-master",
     "authors": [
         {
             "name": "叶落无痕",
-            "email": "1262847141@qq.com"
+            "email": "zxcaile@foxmail.com"
         }
     ],
     "require": {
         "php": ">7.1",
-        "ext-gd": "*",
-        "ext-curl": "*",
-        "ext-json": "*",
-        "zoujingli/think-install": "^1.0|@dev",
-        "zoujingli/think-library": "^6.1|@dev",
         "xiaochao/plugs-account": "dev-master"
     },
     "autoload": {
@@ -26,7 +20,8 @@
     "extra": {
         "config": {
             "type": "plugin",
-            "name": "用户签到管理"
+            "name": "用户签到管理",
+            "description": "用户签到模块，包含：签到配置,签到记录"
         },
         "think": {
             "services": [

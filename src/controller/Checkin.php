@@ -4,8 +4,8 @@ declare (strict_types=1);
 
 namespace plugin\sign\controller;
 
-use plugin\account\model\AccountUser;
-use plugin\sign\model\AccountUserCheckin;
+use plugin\account\model\PluginAccountUser;
+use plugin\sign\model\PluginSignUserCheckin;
 use think\admin\Controller;
 use think\admin\helper\QueryHelper;
 
@@ -27,13 +27,13 @@ class Checkin extends Controller
      */
     public function index()
     {
-        AccountUserCheckin::mQuery()->layTable(function () {
+        PluginSignUserCheckin::mQuery()->layTable(function () {
             $this->title = '用户签到管理';
         }, function (QueryHelper $query) {
             // 搜索数据表字段搜索
             $query->with('user')->dateBetween('create_time');
             // 按用户资料搜索
-            $user = AccountUser::mQuery()->like('nickname|phone#user');
+            $user = PluginAccountUser::mQuery()->like('nickname|phone#user');
             if ($user->getOptions('where')) $query->whereRaw("unid in {$user->field('id')->buildSql()}");
         });
     }
@@ -48,12 +48,12 @@ class Checkin extends Controller
     {
         if ($this->request->isGet()) {
             $this->title = '签到参数配置';
-            $this->data = sysdata(AccountUserCheckin::$ckcfg);
+            $this->data = sysdata(PluginSignUserCheckin::$ckcfg);
             $this->fetch();
         } elseif ($this->request->isPost()) {
             $this->data = $this->request->post();
             $this->data['items'] = json_decode($this->data['items'] ?? '{}', true);
-            sysdata(AccountUserCheckin::$ckcfg, $this->data);
+            sysdata(PluginSignUserCheckin::$ckcfg, $this->data);
             $this->success('配置修改成功！', 'javascript:history.back()');
         }
     }
