@@ -21,6 +21,7 @@
         "config": {
             "type": "plugin",
             "name": "用户签到管理",
+            "cover": "layui-icon layui-icon-survey",
             "description": "用户签到模块，包含：签到配置,签到记录"
         },
         "think": {
