@@ -5,7 +5,7 @@ declare (strict_types=1);
 namespace plugin\sign\service;
 
 use plugin\sign\model\PluginSignUserCheckin;
-use plugin\payment\service\Integral;
+use plugin\fund\service\Integral;
 use think\admin\Exception;
 use think\admin\extend\CodeExtend;
 
@@ -50,7 +50,7 @@ class SignService
     /**
      * 用户签到
      * @param int $uid
-     * @return void
+     * @return array
      * @throws Exception
      */
     public static function in(int $uid)

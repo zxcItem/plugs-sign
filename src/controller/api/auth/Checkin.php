@@ -1,12 +1,11 @@
 <?php
 
-
 declare (strict_types=1);
 
 namespace plugin\sign\controller\api\auth;
 
-use plugin\payment\service\Balance;
-use plugin\payment\service\Integral;
+use plugin\fund\service\Balance;
+use plugin\fund\service\Integral;
 use plugin\account\controller\api\Auth;
 use plugin\sign\model\PluginSignUserCheckin;
 use think\admin\extend\CodeExtend;
